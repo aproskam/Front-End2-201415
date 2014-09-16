@@ -9,10 +9,6 @@ JavaScript stof dat behandeld wordt tijdens deze lessen:
 - Controllers
 - Namespace
 - Self Invoking Anonymous Function
--
--
--
--
 
 5 best pratices for JavaScript:
 
