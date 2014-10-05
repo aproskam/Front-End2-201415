@@ -1,96 +1,59 @@
 <!doctype html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="description" content="Web App V1, basic JavaScript Skeleton">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>My Favorite Movies</title>
-        <link rel="stylesheet" href="static/css/style.css">
-        <link rel="author" href="humans.txt">
-    </head>
-    <body>
-		<main id="content">
-			<section data-route="about">
-				<section>
-					<header>
-						<h1>About</h1>
+<head>
+	<meta charset="utf-8">
+	<meta name="description" content="Web App V1, basic JavaScript Skeleton">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Favorite Movies of Dennis Tel</title>
+	<link rel="stylesheet" href="static/css/style.css">
+	<link rel="author" href="humans.txt">
+</head>
+<body>
 
-						<p></p>
-						<p></p>
-						<p></p>
-						<p></p>
-					</header>
-				</section>
-			</section>
+<header>
+	<nav>
+		<ul>
+			<li><a href="#about">About</a></li>
+			<li><a href="#movies">Movies</a></li>
+		</ul>
+	</nav>
+</header>
 
-			<section data-route="movies">
-				<h1>Movies</h1>	
-				<article>
-					<header>
-						<h1></h1>
-						<em><time></time></em>
-					</header>
+<main id="content">
+	<section data-route="about">
+		<section>
+			<header>
+				<h1 data-bind="title"></h1>
+				<p data-bind="description"></p>
+			</header>
+		</section>
+	</section>
 
-					<figure>
-						<img src="" alt="">
-					</figure>
+	<section data-route="movies">
+		<div class="moviesDirective">
+			<!-- article will be repeated for movies -->
+			<article>
+				<header>
+					<h1 data-bind="title"></h1>
+					<p>Release date: <time data-bind="release_date"></time></p>
+				</header>
 
-					<p></p>
-				</article>
-			
-				<article>
-					<header>
-						<h1></h1>
-						<em><time></time></em>
-					</header>
+				<p><span>Plot: </span><span data-bind="plot"></span></p>
 
-					<figure>
-						<img src="" alt="">
-					</figure>			
+				<figure>
+					<img class="cover" />
+				</figure>
 
-					<p></p>		
-				</article>
-			
-				<article>
-					<header>
-						<h1></h1>
-						<em><time></time></em>
-					</header>
-					
-					<figure>
-						<img src="" alt="">
-					</figure>
-					
-					<p></p>
-					
-				</article>
-			
-				<article>
-					<header>
-						<h1></h1>
-						<em><time></time></em>
-					</header>
-					
-					<figure>
-						<img src="" alt="">
-					</figure>
-					
-					<p></p>
-				</article>
-			
-			</section>
-		</main>
-		
-		<header>
-			<nav>
-				<ul>
-					<li><a href="#about">About</a></li>
-					<li><a href="#movies">Movies</a></li>
-				</ul>
-			</nav>
-		</header>
-		<script src="static/js/vendor/routie.min.js"></script>
-		<script src="static/js/vendor/transparency.min.js"></script>
-        <script src="static/js/app.js"></script>
-    </body>
+				<p></p>
+			</article>
+		</div>
+
+	</section>
+</main>
+
+<script src="static/js/vendor/routie.min.js"></script>
+<script src="static/js/vendor/transparency.min.js"></script>
+<script src="static/js/utils.js"></script>
+<script src="static/js/app.js"></script>
+</body>
 </html>

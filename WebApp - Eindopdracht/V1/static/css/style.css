@@ -1,7 +1,0 @@
-section {
-	display: none;
-}
-
-section.active, section.active section {
-	display: block;
-}
