@@ -6,7 +6,22 @@ var APPIE = APPIE || {};
 
         init: function() {
             // initialize APP objects
+            
             APPIE.router.init();
+            APPIE.checker.webstorage();
+        }
+    };
+
+    APPIE.checker = {
+        webstorage: function() {
+            if (Modernizr.localstorage) {
+                // window.localStorage is available!
+                console.log("localStorage supported")
+            } else {
+                console.log("no localStorage support :(")
+                // no native support for HTML5 storage :(
+                // maybe try dojox.storage or a third-party solution
+            }
         }
     };
 
@@ -21,14 +36,13 @@ var APPIE = APPIE || {};
                     console.log("route changed: about");
 
                     APPIE.appcontent.about();
-
-
+                    console.log("get data for: about");
                 },
                 'movies': function() {
                     APPIE.sections.toggle('section[data-route="movies"]');
                     console.log("route changed: movies");
 
-                    APPIE.xhr.trigger('GET', 'http://dennistel.nl/movies', APPIE.appcontent.movies);
+                    APPIE.xhr.trigger('GET', 'https://api.themoviedb.org/3/movie/550?api_key=538588258b6ba1ffb190d105879024cd', APPIE.appcontent.movies);
                     console.log("get data for: movies");
                 },
                 '*': function() {
@@ -62,9 +76,32 @@ var APPIE = APPIE || {};
 
     //DATA Object
     APPIE.appcontent = {
-        movies: function(data) {
-            console.log('create model for movies');
+        about: function() {
+            console.log('create model for about');
 
+            var model =  {
+                "about": [
+                    {
+                        "title": "About",
+                        "description": "An overview of movies"
+                    }
+
+                ]
+            };
+            return APPIE.sections.renderAbout(model);
+        },
+
+        movies: function(data) {
+
+            console.log(JSON.parse(data));
+
+            console.log('store data in localStorage');
+            localStorage.setItem('movies', (data));
+
+            console.log('Get JSON movie data from localstorage');
+            console.log( JSON.parse( localStorage.getItem( 'movies' ) ) );
+
+            console.log('create model for movies');
             var model =  {
                 "movies": JSON.parse(data),
                 "moviesDirective": {
@@ -80,21 +117,7 @@ var APPIE = APPIE || {};
                 }
             };
             return APPIE.sections.renderMovies(model);
-        },
-        about: function() {
-            console.log('create model for about');
-
-            var model =  {
-                "about": [
-                    {
-                        "title": "About",
-                        "description": "An overview of movies"
-                    }
-
-                ]
-            };
-            return APPIE.sections.renderAbout(model);
-        }
+        }        
     };
 
     //Sections object
