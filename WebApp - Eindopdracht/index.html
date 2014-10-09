@@ -21,18 +21,17 @@
 
 <main id="content">
 	<section data-route="about">
-		<section>
+		<article>
 			<header>
 				<h1 data-bind="title"></h1>
 				<p data-bind="description"></p>
 			</header>
-		</section>
+		</article>
 	</section>
 
 	<section data-route="movies">
-		<div class="moviesDirective">
 			<!-- article will be repeated for movies -->
-			<article>
+			<article data-bind="moviesDirective">
 				<header>
 					<h1 data-bind="title"></h1>
 					<p>Release date: <time data-bind="release_date"></time></p>
@@ -41,13 +40,27 @@
 				<p><span>Simple Plot: </span><span data-bind="simple_plot"></span></p>
 
 				<figure>
-					<img class="cover" />
+					<img data-bind="cover" />
 				</figure>
 
-				<p></p>
+				<a href="" data-bind="details">More info</a>
 			</article>
-		</div>
+	</section>
 
+	<section data-route="movie-details">
+			<!-- article will be repeated for movies -->
+			<article data-bind="movieDirective">
+				<header>
+					<h1 data-bind="title"></h1>
+					<p>Release date: <time data-bind="release_date"></time></p>
+				</header>
+
+				<p><span>Plot: </span><span data-bind="plot"></span></p>
+
+				<figure>
+					<img data-bind="cover" />
+				</figure>
+			</article>
 	</section>
 </main>
 
@@ -56,7 +69,7 @@
 <script src="static/js/vendor/transparency.min.js"></script>
 <script src="static/js/vendor/underscore.js"></script>
 <script src="static/js/utils.js"></script>
-<script src="static/js/work.js"></script>
+<!--<script src="static/js/work.js"></script>-->
 <script src="static/js/app.js"></script>
 </body>
 </html>

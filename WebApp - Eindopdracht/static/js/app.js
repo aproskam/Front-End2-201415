@@ -5,8 +5,7 @@ var APPIE = APPIE || {};
     APPIE.controller = {
 
         init: function() {
-            // initialize APP objects
-            
+            // initialize APP objects            
             APPIE.router.init();
             APPIE.checker.webstorage();
         }
@@ -18,7 +17,7 @@ var APPIE = APPIE || {};
                 // window.localStorage is available!
                 console.log("localStorage supported")
             } else {
-                console.log("no localStorage support :(")
+                console.log("no support for localStorage :(")
                 // no native support for HTML5 storage :(
                 // maybe try dojox.storage or a third-party solution
             }
@@ -42,12 +41,22 @@ var APPIE = APPIE || {};
                     APPIE.sections.toggle('section[data-route="movies"]');
                     console.log("route changed: movies");
 
-                    APPIE.xhr.trigger('GET', 'https://api.themoviedb.org/3/movie/550?api_key=538588258b6ba1ffb190d105879024cd', APPIE.appcontent.movies);
+                    APPIE.xhr.trigger('GET', 'http://dennistel.nl/movies', APPIE.appcontent.movies);
                     console.log("get data for: movies");
+                },
+                'movies/:id': function(id) {
+                    APPIE.sections.toggle('section[data-route="movie-details"]');
+                    console.log("route changed: movie id");
+
+                    APPIE.appcontent.movie;
+                    console.log("get data for: movie " + [id]);
                 },
                 '*': function() {
                     APPIE.sections.toggle('section[data-route="about"]');
                     console.log("route changed: default");
+
+                    APPIE.appcontent.about();
+                    console.log("get data for: about");
                 }
             });
         }
@@ -91,19 +100,14 @@ var APPIE = APPIE || {};
             return APPIE.sections.renderAbout(model);
         },
 
-        movies: function(data) {
-
-            console.log(JSON.parse(data));
+        movies: function(data, id) {
 
             console.log('store data in localStorage');
             localStorage.setItem('movies', (data));
 
-            console.log('Get JSON movie data from localstorage');
-            console.log( JSON.parse( localStorage.getItem( 'movies' ) ) );
-
             console.log('create model for movies');
             var model =  {
-                "movies": JSON.parse(data),
+                "movies": JSON.parse(localStorage.getItem('movies')),
                 "moviesDirective": {
                     cover: {
                         src: function () {
@@ -112,29 +116,63 @@ var APPIE = APPIE || {};
                         alt: function () {
                             return this.title + ' cover';
                         }
-
+                    },
+                    details: {
+                        href: function() {
+                            return '#movies/' + (this.id - 1);
+                        }
                     }
                 }
             };
             return APPIE.sections.renderMovies(model);
-        }        
+        },
+
+        movie: function(id, data) {
+
+            console.log([id]);
+
+            console.log('get data from localStorage');
+            localStorage.getItem('movies', [id]);
+
+            console.log('create model for movie ' + [id]);
+            var model = {
+                "movieDetails": JSON.parse(localStorage.getItem('movies', [id])),
+
+                "movieDirective": {
+                    cover: {
+                        src: function () {
+                            return this.cover;
+                        },
+                        alt: function () {
+                            return this.title + ' cover';
+                        }
+                    }
+                }
+            };            
+            return APPIE.sections.renderMovie(model);
+        }
     };
 
     //Sections object
     APPIE.sections = {
         renderAbout: function(model) {
             console.log('render about');
-            var sectionAbout = document.querySelector('section[data-route="about"]');
+            var sectionAbout = $('section[data-route="about"]');
             Transparency.render(sectionAbout, model.about);
         },
         renderMovies: function(model) {
             console.log('render movies');
-            var sectionMovies = document.querySelector('section[data-route="movies"]');
+            var sectionMovies = $('section[data-route="movies"]');
             Transparency.render(sectionMovies, model.movies, model.moviesDirective);
+        },
+        renderMovie: function(model) {
+            console.log('render details movie ' + [id]);
+            var sectionMovie = $('section[data-route="movie-detail"]');
+            Transparency.render(sectionMovie, model.movieDetails, model.movieDirective);
         },
         toggle: function(section) {
 
-            var sections = document.querySelectorAll('#content section');
+            var sections = $$('#content section');
 
             for(i=0; i<sections.length; i++) {
                 sections[i].classList.remove('active');
