@@ -1,16 +1,18 @@
+//NAMESPACE
 var APPIE = APPIE || {};
 
+//Self-Invloking Anonymous function
 (function($, $$, hasClass) {
     //controller init object
     APPIE.controller = {
 
         init: function() {
             // initialize APP objects
-            APPIE.checker.webstorage();
+            APPIE.storageLoader.webstorage();
         }
     };
 
-    APPIE.checker = {
+    APPIE.storageLoader = {
         webstorage: function() {
             if (Modernizr.localstorage) {
                 // window.localStorage is available!
@@ -21,11 +23,12 @@ var APPIE = APPIE || {};
 					APPIE.router.init();
 				});
 
+            //FALLBACK if webstorage is not supported, JSON data is put in the global scope
             } else {
                 console.log("no support for localStorage :(");
 
 				APPIE.xhr.trigger('GET', 'http://dennistel.nl/movies', function (response) {
-					window.globalData = response;
+				    window.globalData = response;
 					window.localStorage.getItem = function(){return globalData};
 
 					APPIE.router.init();
@@ -178,10 +181,6 @@ var APPIE = APPIE || {};
         toggle: function(section) {
 
             var sections = $$('#content section');
-
-			console.log('!!!!!!!!!!!!!');
-
-
             for(var i=0; i<sections.length; i++) {
                 sections[i].classList.remove('active');
             }
