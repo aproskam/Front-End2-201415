@@ -29,21 +29,42 @@
 	</section>
 
 	<section data-route="movies">
-			<!-- article will be repeated for movies -->
-			<article data-bind="moviesDirective">
-				<header>
-					<h1 data-bind="title"></h1>
-					<p>Release date: <time data-bind="release_date"></time></p>
-				</header>
 
-				<p><span>Simple Plot: </span><span data-bind="simple_plot"></span></p>
+		<ul>
+			<li>
+				<a href="#action">Action</a>
+			</li>
+			<li>
+				<a href="#adventure">Adventure</a>
+			</li>
+			<li>
+				<a href="#crime">Crime</a>
+			</li>
+			<li>
+				<a href="#drama">Drama</a>
+			</li>
+			<li>
+				<a href="#horror">Horror</a>
+			</li>
+			<li>
+				<a href="#thriller">Thriller</a>
+			</li>
+		</ul>
+		<!-- article will be repeated for movies -->
+		<article data-bind="moviesDirective">
+			<header>
+				<h1 data-bind="title"></h1>
+				<h2 data-bind="reviews">Review score: <span data-bind="score"></span></h2>
+				<p>Release date: <time data-bind="release_date"></time></p>
+			</header>
+			<p>Simple Plot: <span data-bind="simple_plot"></span></p>
 
-				<figure>
-					<img data-bind="cover" />
-				</figure>
+			<figure>
+				<img data-bind="cover" />
+			</figure>
 
-				<a href="" data-bind="details">More info</a>
-			</article>
+			<a href="" data-bind="details">More info</a>
+		</article>
 	</section>
 
 	<section data-route="movie-details">
@@ -52,8 +73,11 @@
 
 				<header>
 					<h1 data-bind="title"></h1>
+					<h2 data-bind="reviews">Review score: <span data-bind="score"></span></h2>
 					<p>Release date: <time data-bind="release_date"></time></p>
 				</header>
+
+				
 
 				<p><span>Plot: </span><span data-bind="plot"></span></p>
 

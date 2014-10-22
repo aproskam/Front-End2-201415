@@ -60,6 +60,9 @@ var APPIE = APPIE || {};
 					APPIE.appcontent.movies();
                     console.log("get data for: movies");
                 },
+                'movies/genre/:genre': function() {
+
+                },
                 'movies/:id': function(id) {
                     APPIE.sections.toggle('section[data-route="movie-details"]');
                     console.log("route changed: movie id", id);
@@ -117,11 +120,13 @@ var APPIE = APPIE || {};
         },
 
         movies: function(data) {
+            
 
             console.log('create model for movies');
-
+            console.log(JSON.parse(localStorage.getItem('movies')));
             var model =  {
-                "movies": JSON.parse(localStorage.getItem('movies')),
+
+                "movies": this.manipulateData(),
                 "moviesDirective": {
                     cover: {
                         src: function () {
@@ -141,10 +146,25 @@ var APPIE = APPIE || {};
             return APPIE.sections.renderMovies(model);
         },
 
+        manipulateData: function() {
+
+            var data = JSON.parse(localStorage.getItem('movies'));
+
+            //map reduce
+            _.map(data, function (movie, i){
+                    movie.reviews   = _.reduce(movie.reviews,   function(memo, review){   return memo + review.score; }, 0) / movie.reviews.length;
+                    //movie.directors = _.reduce(movie.directors, function(memo, director){ return memo + director.name + ' '; }, '');
+                    //movie.actors    = _.reduce(movie.actors,    function(memo, actor){    return memo + actor.actor_name + ', ';}, '');
+                    //return movie;
+                    console.log(movie.reviews)
+                })  
+            return data;
+        },
+
         movie: function(id) {
 			console.log('create model for movie ', id);
             var model = {
-                "movieDetails": JSON.parse(localStorage.getItem('movies'))[id],
+                "movieDetails": this.manipulateData()[id],
                 "movieDirective": {
                     cover: {
                         src: function () {
