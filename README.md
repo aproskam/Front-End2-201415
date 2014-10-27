@@ -10,12 +10,15 @@ JavaScript stof dat behandeld wordt tijdens deze lessen:
 - Namespace
 - Self Invoking Anonymous Function
 
-5 best pratices for JavaScript:
+Best pratices for JavaScript:
 
 1. Get your APP structere on paper before you start coding!
 2. Use logic names
-3. Use CamelCase 
-4. 
-5. 
+3. Use camelCase 
+4. Don't use jQuery
+5. Using comments can be handy
+6. Namespaces are a must in big projects(modules)
+7. Make use of a Utils(lazy coders)
+8. Offline-First
 
 
