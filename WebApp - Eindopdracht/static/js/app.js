@@ -43,10 +43,11 @@ var APPIE = APPIE || {};
     //Router object
     APPIE.router = {
         init: function() {
-            console.log("router begins");
+            console.log("router begins");            
 
             routie({
                 'about': function() {
+                    $('section[data-route="movies"]').classList.remove('flex');
                     APPIE.sections.toggle('section[data-route="about"]');
                     console.log("route changed: about");
 
@@ -54,15 +55,34 @@ var APPIE = APPIE || {};
                     console.log("get data for: about");
                 },
                 'movies': function() {
-                    APPIE.sections.toggle('section[data-route="movies"]');
-                    console.log("route changed: movies");
 
-					APPIE.appcontent.movies();
+                    $('.spinner').classList.add('active');
+
+                    
+
+                    setTimeout(function() {
+                        $('.spinner').classList.remove('active');
+                        $('section[data-route="movies"]').classList.add('flex');
+
+                        APPIE.sections.toggle('section[data-route="movies"]');
+                        console.log("route changed: movies");
+
+                    }, 2000);
+
+                    
+
+                    APPIE.appcontent.movies();
                     console.log("get data for: movies");
+                    
                 },
-                'movies/genre/:genre': function() {
+                'movies/genre/:genre': function(genre) {
+                    APPIE.sections.toggle('section[data-route="movie-genre"]');
+                    console.log("route changed: movie genre", genre);
 
+                    APPIE.appcontent.movieGenre(genre);
+                    console.log("get data for: movie genre" + genre);
                 },
+
                 'movies/:id': function(id) {
                     APPIE.sections.toggle('section[data-route="movie-details"]');
                     console.log("route changed: movie id", id);
@@ -78,6 +98,12 @@ var APPIE = APPIE || {};
                     console.log("get data for: about");
                 }
             });
+        },
+        spinnerOn: function() {
+            
+        },
+        spinnerOff: function() {
+            
         }
     };
 
@@ -107,11 +133,11 @@ var APPIE = APPIE || {};
         about: function() {
             console.log('create model for about');
 
-            var model =  {
+            var model = {
                 "about": [
                     {
                         "title": "About",
-                        "description": "An overview of movies"
+                        "description": "The Movie Database (TMDb) was started as a side project in 2008 to help the media center community serve high resolution posters and fan art. What started as a simple image sharing community has turned into one of the most actively user edited movie database on the Internet. With an initital data contribution from a project called omdb (thank you!), the goal was to create our own product and service. We launched the first version of the database in early 2009. Along with the website we also launched one of first and only free movie data API's. Today, our service is used by tens of millions of people every week and is often regarded as the single best place to get movie data and images. Whether you're interested in what movies have won the Oscar for best picture, maintaining a personal watchlist, or like to develop applications of your own, we hope you'll love everything our service has to offer. So explore a little. Search for your favorite movie. Build a list of movies you want to watch. We're really proud of the service we've built and hope you find it as useful as we do."
                     }
 
                 ]
@@ -120,13 +146,11 @@ var APPIE = APPIE || {};
         },
 
         movies: function(data) {
-            
-
             console.log('create model for movies');
-            console.log(JSON.parse(localStorage.getItem('movies')));
-            var model =  {
 
-                "movies": this.manipulateData(),
+            var model = {
+
+                "movies": APPIE.manipulate.reviewData(),
                 "moviesDirective": {
                     cover: {
                         src: function () {
@@ -140,31 +164,66 @@ var APPIE = APPIE || {};
                         href: function() {
                             return '#movies/' + (this.id - 1);
                         }
+                    },
+                    genres: { 
+                        genre: {
+                            href: function() {
+                                return "#movies/genre/" + (this.value);
+                            },
+                            text: function() {
+                                return this.value;
+                            }
+                        },
+                    },
+                    reviews: {
+                        text: function(){                       
+                            if(isNaN(this.reviews)){
+                                return 'No score available';
+                            } else {
+                                return this.reviews;
+                            }
+                        }
                     }
                 }
             };
             return APPIE.sections.renderMovies(model);
         },
 
-        manipulateData: function() {
+        movieGenre: function(genre) {
+            console.log('create model for movie genre:', genre);
+            var model = {
+                "genreMovies": APPIE.manipulate.filter(genre),
 
-            var data = JSON.parse(localStorage.getItem('movies'));
-
-            //map reduce
-            _.map(data, function (movie, i){
-                    movie.reviews   = _.reduce(movie.reviews,   function(memo, review){   return memo + review.score; }, 0) / movie.reviews.length;
-                    //movie.directors = _.reduce(movie.directors, function(memo, director){ return memo + director.name + ' '; }, '');
-                    //movie.actors    = _.reduce(movie.actors,    function(memo, actor){    return memo + actor.actor_name + ', ';}, '');
-                    //return movie;
-                    console.log(movie.reviews)
-                })  
-            return data;
+                "moviesDirective": {
+                    cover : {
+                        src: function() {
+                            return this.cover;
+                        }
+                    },
+                    details: {
+                        href: function() {
+                            return '#movies/' + (this.id - 1);
+                        }
+                    },
+                    genres: { 
+                        genre: {
+                            href: function() {
+                                return "#movies/genre/" + (this.value);
+                            },
+                            text: function() {
+                                return this.value;
+                            }
+                        }
+                    }
+                }
+            };
+            return APPIE.sections.renderGenre(model);
         },
 
         movie: function(id) {
 			console.log('create model for movie ', id);
             var model = {
-                "movieDetails": this.manipulateData()[id],
+                "movieDetails": APPIE.manipulate.reviewData()[id],
                 "movieDirective": {
                     cover: {
                         src: function () {
@@ -174,10 +233,60 @@ var APPIE = APPIE || {};
                         alt: function () {
                             return this.title + ' cover';
                         }
+                    },
+                    actors: {
+                        url_photo: {
+                            src: function() {
+                                return this.url_photo;
+                            }
+                        },
+                        url_profile: {
+                            href: function() {
+                                return this.url_profile;
+                            }
+                        },
                     }
                 }
             };            
             return APPIE.sections.renderMovie(model);
+        }
+    };
+
+    //Manipulate JSON data object
+    APPIE.manipulate = {
+
+        //Manipulate review scores
+        reviewData: function() {
+
+            console.log("manipulate review scores")
+            // get data
+            var data = JSON.parse(localStorage.getItem('movies'));
+
+            //map reduce
+            _.map(data, function (movie, i) {
+                    movie.reviews   = _.reduce(movie.reviews,   function(memo, review){   return memo + review.score; }, 0) / movie.reviews.length;
+                    
+                    console.log(movie.reviews)
+                })  
+            return data;
+        },
+
+        //Manipulate movie genre
+        filter: function(genre) {
+
+            console.log("manipulate genre filter")
+            // get data
+            var data = JSON.parse(localStorage.getItem('movies'));
+
+            // loop over data
+            for (var i = 0; i < data.length; i++) { 
+                // filter data based on hash
+                var data = _.filter(data, function (data) {
+                    // return objects if object contains genre
+                    return _.contains(data.genres, genre);
+                });
+            };
+            return data
         }
     };
 
@@ -188,10 +297,15 @@ var APPIE = APPIE || {};
             var sectionAbout = $('section[data-route="about"]');
             Transparency.render(sectionAbout, model.about);
         },
-        renderMovies: function(model) {
+        renderMovies: function(model) {            
             console.log('render movies');
             var sectionMovies = $('section[data-route="movies"]');
             Transparency.render(sectionMovies, model.movies, model.moviesDirective);
+        },
+        renderGenre: function(model) {
+            console.log('render genre movies ' + model.genreMovies.genres);
+            var sectionGenre = $('section[data-route="movie-genre"]');
+            Transparency.render(sectionGenre, model.genreMovies, model.moviesDirective);            
         },
         renderMovie: function(model) {
             console.log('render details movie ' + model.movieDetails.id);
@@ -211,5 +325,17 @@ var APPIE = APPIE || {};
     };
 
     APPIE.controller.init();
+
+            
+    //Touch event - swipe to show filter menu
+    var element = $('section[data-route="movies"]');
+    Hammer(element).on("swipeleft", function(event) {        
+        console.log('swipe left: show filter menu');
+        $('.nav-filter').classList.add('active');
+    });
+    Hammer(element).on("swiperight", function(event) {        
+        console.log('swipe right: hide filter menu');
+        $('.nav-filter').classList.remove('active');
+    });                
 
 })(APPIE.Utils.$, APPIE.Utils.$$, APPIE.Utils.hasClass);

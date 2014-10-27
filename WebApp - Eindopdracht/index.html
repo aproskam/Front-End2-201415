@@ -1,22 +1,37 @@
 <!doctype html>
+<html lang="en">
 <head>
 	<meta charset="utf-8">
 	<meta name="description" content="Web App V1, basic JavaScript Skeleton">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Favorite Movies of Dennis Tel</title>
+	
+
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,300,700' rel='stylesheet' type='text/css'>
+
+	<link href="static/font-awesome-4.2.0/css/font-awesome.min.css" rel="stylesheet">
+
 	<link rel="stylesheet" href="static/css/style.css">
 	<link rel="author" href="humans.txt">
 </head>
 <body>
-
 <header>
 	<nav>
 		<ul>
-			<li><a href="#about">About</a></li>
-			<li><a href="#movies">Movies</a></li>
+			<li>
+				<span class="fa fa-film fa-2x logo"></span>
+			</li>
+			<li>
+				<a href="#about">About</a>
+			</li>
+			<li>
+				<a href="#movies">Movies</a>
+			</li>
 		</ul>
 	</nav>
 </header>
+
+<i class="fa fa-circle-o-notch fa-spin fa-4x spinner"></i>
 
 <main id="content">
 	<section data-route="about">
@@ -29,70 +44,128 @@
 	</section>
 
 	<section data-route="movies">
-
-		<ul>
-			<li>
-				<a href="#action">Action</a>
-			</li>
-			<li>
-				<a href="#adventure">Adventure</a>
-			</li>
-			<li>
-				<a href="#crime">Crime</a>
-			</li>
-			<li>
-				<a href="#drama">Drama</a>
-			</li>
-			<li>
-				<a href="#horror">Horror</a>
-			</li>
-			<li>
-				<a href="#thriller">Thriller</a>
-			</li>
-		</ul>
+		<nav class="nav-filter">
+			<ul>
+				<li>
+					<a href="#">Filter</a>
+				</li>
+				<li>
+					<a href="#movies/genre/Horror">Horror</a>
+				</li>
+				<li>
+					<a href="#movies/genre/Crime">Crime</a>
+				</li>
+				<li>
+					<a href="#movies/genre/Drama">Drama</a>
+				</li>
+				<li>
+					<a href="#movies/genre/Thriller">Thriller</a>
+				</li>
+				<li>
+					<a href="#movies/genre/Action">Action</a>
+				</li>
+				<li>
+					<a href="#movies/genre/Adventure">Adventure</a>
+				</li>
+			</ul>
+		</nav>
 		<!-- article will be repeated for movies -->
 		<article data-bind="moviesDirective">
-			<header>
-				<h1 data-bind="title"></h1>
-				<h2 data-bind="reviews">Review score: <span data-bind="score"></span></h2>
-				<p>Release date: <time data-bind="release_date"></time></p>
-			</header>
-			<p>Simple Plot: <span data-bind="simple_plot"></span></p>
-
 			<figure>
 				<img data-bind="cover" />
 			</figure>
 
-			<a href="" data-bind="details">More info</a>
+			<header>
+				<h1 data-bind="title"></h1>
+				<h2 data-bind="reviews"></h2>
+				<p>Release date: <time data-bind="release_date"></time></p>
+				
+			</header>
+			
+			<div class="clear"></div>
+			<ul data-bind="genres">
+					<li>
+						<a data-bind="genre"></a>
+					</li>
+				</ul>
+			<div class="simple-plot">
+				<p><span data-bind="simple_plot"></span></p>	
+				<a href="" data-bind="details">More info</a>
+			</div>
+		</article>
+	</section>
+
+	<section data-route="movie-genre">
+		<article data-bind="moviesDirective">
+			<figure >
+				<img data-bind="cover" />
+			</figure>
+
+			<header>
+				<h1 data-bind="title"></h1>
+				<p>Release date: <time data-bind="release_date"></time></p>
+				
+			</header>
+			
+			<div class="clear"></div>
+			<ul data-bind="genres">
+					<li>
+						<a data-bind="genre"></a>
+					</li>
+				</ul>
+			<div class="simple-plot">
+				<p><span data-bind="simple_plot"></span></p>	
+				<a href="" data-bind="details">More info</a>
+			</div>
 		</article>
 	</section>
 
 	<section data-route="movie-details">
-			<!-- article will be repeated for movies -->
-			<article data-bind="movieDirective">
+		<article data-bind="movieDirective">
+			
+			<header>
+				<h1 data-bind="title"></h1>
+				<h2 data-bind="reviews"></span></h2>
+				<p>Release date: <time data-bind="release_date"></time></p>
+			</header>
 
-				<header>
-					<h1 data-bind="title"></h1>
-					<h2 data-bind="reviews">Review score: <span data-bind="score"></span></h2>
-					<p>Release date: <time data-bind="release_date"></time></p>
-				</header>
+			<figure class="movie-cover">
+				<img data-bind="cover" />
+			</figure>				
 
-				
+			<div class="clear"></div>
+			<div class="plot">
+				<p><span data-bind="plot"></span></p>
+			</div>
+			
 
-				<p><span>Plot: </span><span data-bind="plot"></span></p>
-
-				<figure>
-					<img data-bind="cover" />
-				</figure>
-
-			</article>
+			<ul data-bind="actors">
+				<li>
+					<figure class="actor-photo">
+						<img data-bind="url_photo" />
+					</figure>
+				</li>
+				<li>
+					<p>Naam: <span data-bind="actor_name"></span></p>
+				</li>
+				<li>
+					<p>Karakter: <span data-bind="character"></span></p>
+				</li>
+				<li>
+					<p>Profiel: <a data-bind="url_profile" target="_blank"></a></p>
+				</li>
+			</ul>
+		</article>
 	</section>
+
 </main>
+<footer><p>Version: 1.0 | 27-10-2014</p></footer>
 
 <script src="static/js/vendor/modenizr.localstorage.min.js"></script>
 <script src="static/js/vendor/routie.min.js"></script>
 <script src="static/js/vendor/transparency.min.js"></script>
 <script src="static/js/vendor/underscore.js"></script>
+<script src="static/js/vendor/hammer.min.js"></script>
 <script src="static/js/utils.js"></script>
 <!--<script src="static/js/work.js"></script>-->
 <script src="static/js/app.js"></script>

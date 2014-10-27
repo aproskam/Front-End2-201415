@@ -1,7 +1,506 @@
+/*////////////DEFAULT STYLE SETTINGS\\\\\\\\\\\\\\\\\*/
+*, hmtl, body {
+	margin: 0;
+	padding: 0;
+	font-size: 100%;
+}
+
+body {
+	overflow-x: hidden;
+	width: 100%;
+	background-color: white;
+	font-size: 1.25em;
+	font-family: 'Oswald', serif;
+	font-weight: 400;
+	line-height: 1.45;
+	color: #333;
+	-webkit-hyphens: auto;
+	-moz-hyphens: auto;
+	-o-hyphens: auto;
+	-ms-hyphens: auto;
+	hyphens: auto;
+}
+
+p {
+	margin-bottom: 1.3em;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	margin: 1em 0 0.5em;
+	font-weight: inherit;
+	line-height: 1.2;
+}
+
+h1 {
+    margin-top: 0;
+    font-size: 3.998em;
+}
+
+h2 {
+	font-size: 2.827em;
+}
+
+h3 {
+	font-size: 1.999em;
+}
+
+h4 {
+	font-size: 1.414em;
+}
+
+h5 {
+	font-size: 1.1725em;
+}
+
+h6 {
+	font-size: 1.0718em;
+}
+
+small, .font_small {
+	font-size: 0.707em;
+}
+
+
+.clear {
+	clear: both;
+}
+
+.spinner {
+	display: none;
+	position: fixed;
+	top: 40%;
+	left: 40%;
+	z-index: 100;
+	color: #000;
+}
+	.spinner.active {
+		display: block;
+	}
+
+/*////////////HEADER\\\\\\\\\\\\\\\\\*/
+
+
+header {
+	width: 90%;
+	padding: 0 5%;
+	height: 4em;
+	background-color: #fbbc09;
+}
+	header nav ul li {
+		display: inline-block;
+		
+	}
+	header nav ul li .logo {
+		color: #fff;
+	}
+		header nav ul li:first-of-type {
+			margin-right: 5%;
+		}
+		header nav ul li a {
+			display: block;
+			color: #fff;
+			text-decoration: none;
+			border: 2px solid #fff;		
+			margin: 0.5em;
+			padding: 0.5em;
+		}
+
+
+/*////////////DEFAULT SECTION STYLING\\\\\\\\\\\\\\\\\*/
 section {
 	display: none;
 }
 
 section.active, section.active section {
 	display: block;
+}
+
+#content {
+	padding: 5%;
+	position: relative;
+    z-index: 10;
+	-webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+}
+
+
+
+#content section article header {
+	background-color: #fff;
+}
+
+section[data-route='about'] {
+	height: 100%;
+}
+
+	section[data-route='about'] article header {
+		height: 100%;
+	}
+
+/*////////////ALL MOVIES STYLE\\\\\\\\\\\\\\\\\*/
+
+section[data-route='movies'] {
+
+	
+	
+}
+
+section[data-route='movies'].flex {
+}
+
+	section[data-route='movies'] article {
+		width: 100%;
+		border-top: 1px solid #aaa;
+		padding: 10% 0;
+	}
+	section[data-route='movies'] article:first-of-type {
+		width: 100%;
+		border-top: none;
+		padding: 5% 0;
+	}
+
+		section[data-route='movies'] article figure { 
+			width: 40%;
+			margin-bottom: 10%;
+			margin-left: -5%;
+			float: left;
+		}
+			section[data-route='movies'] article figure img { 
+				width: 100%;
+			}
+
+		section[data-route='movies'] article header {
+			width: 60%;
+			padding: 0;
+			margin: 1% 0 10% 0;
+			margin-left: 40%;
+		}
+			section[data-route='movies'] article header h1, h2 {
+				font-size: 1.25em;
+				margin: 2.5% 0;
+				color: #333;
+			}
+			section[data-route='movies'] article header h1 {
+				margin-top: 0;
+			}
+			section[data-route='movies'] article header h2 {
+				display: inline-block;
+				padding: 0.1em;
+				background-color: #fbbc09;
+				color: #fff;
+			}
+			section[data-route='movies'] article header p {
+				margin-bottom: 2.5%;
+				color: #333;
+				font-size: 0.7em;
+			}
+
+			section[data-route='movies'] article  ul {
+				list-style: none;
+			}
+				section[data-route='movies'] article  ul li {
+					display: inline;
+
+				}
+					section[data-route='movies'] article  ul li a {
+						display: inline-block;
+						margin: 0.3em 0;
+						padding: 0.3em;
+						font-size: 0.8em;
+						color: #000;
+						border: 2px solid #fbbc09;
+						text-decoration: none;
+					}
+
+		
+		section[data-route='movies'] article .simple-plot {
+			margin: 0.5em 0 1em 0;
+		}
+
+			section[data-route='movies'] article .simple-plot a {
+				border: 2px solid #fbbc09;
+				color: #000;	
+				padding: 0.3em;
+				text-decoration: none;
+			}
+
+		
+
+		.nav-filter {
+			top: 0;
+			display: block;
+			background-color: #fbbc09;
+			width: 45%;
+			height: 100vh;
+			margin-left: 92.5%;
+			position: fixed;
+		    z-index: 20;
+		    -webkit-transition: all 0.3s;
+		    -moz-transition: all 0.3s;
+		    -ms-transition: all 0.3s;
+		    -o-transition: all 0.3s;
+		    transition: all 0.3s;
+		}
+		.nav-filter:first-of-type {
+			z-index: 99;
+		}
+			.nav-filter ul {
+				list-style: none;
+			}
+				.nav-filter ul li {
+					border-bottom: 1px solid #fff;
+					padding: 0.25em;
+					padding-left: 2.5%;
+
+				}
+					.nav-filter ul li a {
+						color: #000;
+						font-size: 1.2em;
+					}
+					.nav-filter ul li:first-of-type a {
+						color: #fff;
+						text-decoration: none;
+					}
+		
+		.nav-filter.active {
+			display: block;
+			margin-left: 50.5%;
+		}
+
+
+/*////////////ALL MOVIES STYLE\\\\\\\\\\\\\\\\\*/
+
+section[data-route='movie-genre'] {
+	
+}
+	section[data-route='movie-genre'] article {
+		width: 100%;
+		border-top: 1px solid #aaa;
+		padding: 10% 0;
+	}
+	section[data-route='movie-genre'] article:first-of-type {
+		width: 100%;
+		border-top: none;
+		padding: 5% 0;
+	}
+
+		section[data-route='movie-genre'] article figure { 
+			width: 40%;
+			margin-bottom: 10%;
+			margin-left: -5%;
+			float: left;
+		}
+			section[data-route='movie-genre'] article figure img { 
+				width: 100%;
+			}
+
+		section[data-route='movie-genre'] article header {
+			width: 60%;
+			padding: 0;
+			margin: 1% 0 10% 0;
+			margin-left: 40%;
+		}
+			section[data-route='movie-genre'] article header h1, h2 {
+				font-size: 1.25em;
+				margin: 2.5% 0;
+				color: #333;
+			}
+			section[data-route='movie-genre'] article header h1 {
+				margin-top: 0;
+			}
+			section[data-route='movie-genre'] article header h2 {
+				display: inline-block;
+				padding: 0.1em;
+				background-color: #fbbc09;
+				color: #fff;
+			}
+			section[data-route='movie-genre'] article header p {
+				margin-bottom: 2.5%;
+				color: #333;
+				font-size: 0.7em;
+			}
+
+			section[data-route='movie-genre'] article  ul {
+				list-style: none;
+			}
+				section[data-route='movie-genre'] article  ul li {
+					display: inline;
+
+				}
+					section[data-route='movie-genre'] article  ul li a {
+						display: inline-block;
+						margin: 0.3em 0;
+						padding: 0.3em;
+						font-size: 0.8em;
+						color: #000;
+						border: 2px solid #fbbc09;
+						text-decoration: none;
+					}
+
+		
+		section[data-route='movie-genre'] article .simple-plot {
+			margin: 0.5em 0 1em 0;
+		}
+
+			section[data-route='movie-genre'] article .simple-plot a {
+				border: 2px solid #fbbc09;
+				color: #000;	
+				padding: 0.3em;
+				text-decoration: none;
+			}
+
+
+section[data-route='movie-details'] {
+	
+}
+	section[data-route='movie-details'] article {
+		width: 100%;
+		border-top: 1px solid #aaa;
+		padding: 10% 0;
+	}
+	section[data-route='movie-details'] article:first-of-type {
+		width: 100%;
+		border-top: none;
+		padding: 5% 0;
+	}
+
+		section[data-route='movie-details'] article .movie-cover { 
+			width: 110%;
+			margin: 10% 0;
+			margin-left: -5%;
+		}
+			section[data-route='movie-details'] article .movie-cover img { 
+				width: 100%;
+			}
+
+		section[data-route='movie-details'] article header {
+			width: 100%;
+			padding: 0;
+			margin: 1% 0 10% 0;
+			height: 100%;
+		}
+			section[data-route='movie-details'] article header h1, h2 {
+				font-size: 1.999em;
+				margin: 2.5% 0;
+				color: #333;
+			}
+			section[data-route='movie-details'] article header h1 {
+				margin-top: 0;
+			}
+			section[data-route='movie-details'] article header h2 {
+				display: inline-block;
+				padding: 0.1em;
+				background-color: #fbbc09;
+				color: #fff;
+			}
+			section[data-route='movie-details'] article header p {
+				margin-bottom: 2.5%;
+				color: #333;
+				font-size: 0.7em;
+			}
+
+			section[data-route='movie-details'] article ul[data-bind='actors'] {
+				list-style: none;
+			}
+				section[data-route='movie-details'] article ul[data-bind='actors'] li{
+		
+				}
+					section[data-route='movie-details'] article ul[data-bind='actors'] li figure {
+						width: 15%;
+						max-width: 3em;
+						margin-right: 5%;
+						margin-top: 2em;
+					}
+						section[data-route='movie-details'] article ul[data-bind='actors'] li figure img {
+							width: 100%;
+						}
+					section[data-route='movie-details'] article ul[data-bind='actors'] li p {
+						font-size: 0.8em;
+						margin: 0;
+					}
+					section[data-route='movie-details'] article ul[data-bind='actors'] li a {
+						display: inline-block;
+						margin: 0.3em 0;
+						padding: 0.3em;
+						font-size: 0.8em;
+						color: #fbbc09;
+						text-decoration: none;
+					}
+
+		
+		section[data-route='movie-details'] article .plot {
+			margin: 1em 0 1em 0;
+			border-bottom: 2px solid #fbbc09;
+		}
+
+
+footer {
+	position: fixed;
+	bottom: 0;
+	background-color: #fbbc09;
+	height: 1em;
+	padding: 2.5% 0;
+	width: 100%;
+	z-index: 15;
+}
+	footer p {
+		font-size: 0.75em;
+		text-align: center;
+		margin: 0;
+	}
+
+@media screen and (min-width:40em) {
+	
+	section[data-route='movies'].flex {
+		display: -webkit-box;
+		display: -moz-box;
+		display: -ms-flexbox;
+		display: -webkit-flex;
+		display: flex;
+  
+  		-webkit-flex-flow: row wrap;
+  		flex-flow: row wrap;
+
+  		justify-content: space-around;
+
+  		align-items: flex-start;
+	}
+
+	section[data-route='movies'].flex article {
+		width: 40%;
+		min-width: 250px;
+		border: none;
+		padding: 0 2.5%;
+		margin-bottom: 1em;
+	}
+
+		section[data-route='movies'].flex article header {
+			padding-left: 2.5%;
+		}
+
+		section[data-route='movies'].flex article figure {
+			margin-left: 0;
+
+		}
+
+
+	footer {
+		padding: 1% 0;
+	}
+
+}
+
+@media screen and (min-width:80em) {
+
+	section[data-route='movies'].flex article {
+		width: 23%;
+	}
+	
+	.spinner {
+		top: 42.5%;
+		left: 42.5%;
+	}
 }
